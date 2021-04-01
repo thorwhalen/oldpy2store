@@ -1,4 +1,4 @@
-- [py2store](#py2store)
+- [oldpy2store](#oldpy2store)
 - [Quick peek](#quick-peek)
 - [Use cases](#use-cases)
   * [Interfacing reads](#interfacing-reads)
@@ -17,7 +17,7 @@
   * [Graze](#graze)
     + [Example using baby names data](#example-using-baby-names-data)
     + [Example using emoji image urls data](#example-using-emoji-image-urls-data)
-    + [A little py2store exercise: A store to get image objects of emojis](#a-little-py2store-exercise--a-store-to-get-image-objects-of-emojis)
+    + [A little oldpy2store exercise: A store to get image objects of emojis](#a-little-oldpy2store-exercise--a-store-to-get-image-objects-of-emojis)
   * [Grub](#grub)
     + [search your code](#search-your-code)
     + [search jokes (and download them automatically](#search-jokes--and-download-them-automatically)
@@ -41,7 +41,7 @@
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
-# py2store
+# oldpy2store
 Storage CRUD how and where you want it.
 
 List, read, write, and delete data in a structured data source/target, 
@@ -51,18 +51,18 @@ Also, being able to change these particularities without having to change the bu
 
 If you're not a "read from top to bottom" kinda person, here are some tips: 
 [Quick peek](#quick-peek) will show you a simple example of how it looks and feels. 
-[Use cases](#use-cases) will give you an idea of how py2store can be useful to you, if at all. 
+[Use cases](#use-cases) will give you an idea of how oldpy2store can be useful to you, if at all. 
 
 The section with the best bang for the buck is probably 
 [remove (much of the) data access entropy](#remove--much-of-the--data-access-entropy). 
-It will give you simple (but real) examples of how to use `py2store` tooling 
+It will give you simple (but real) examples of how to use `oldpy2store` tooling 
 to bend your interface with data to your will. 
 
 [How it works](#how-it-works) will give you a sense of how it works.
 [More examples](#more-examples) will give you a taste of how you can adapt the three main aspects of 
 storage (persistence, serialization, and indexing) to your needs.
 
-Install it (e.g. `pip install py2store`).
+Install it (e.g. `pip install oldpy2store`).
 
 # Quick peek
 
@@ -70,7 +70,7 @@ Think of type of storage you want to use and just go ahead, like you're using a 
 Here's an example for local storage (you must you string keys only here).
 
 ```pydocstring
->>> from py2store import QuickStore
+>>> from oldpy2store import QuickStore
 >>>
 >>> store = QuickStore()  # will print what (tmp) rootdir it is choosing
 >>> # Write something and then read it out again
@@ -109,16 +109,16 @@ Of course, everything is configurable.
 
 How many times did someone share some data with you in the form of a zip of some nested folders 
 whose structure and naming choices are fascinatingly obscure? And how much time do you then spend to write code 
-to interface with that freak of nature? Well, one of the intents of py2store is to make that easier to do. 
+to interface with that freak of nature? Well, one of the intents of oldpy2store is to make that easier to do. 
 You still need to understand the structure of the data store and how to deserialize these datas into python 
 objects you can manipulate. But with the proper tool, you shouldn't have to do much more than that.
 
 ## Changing where and how things are stored
 
 Ever have to switch where you persist things (say from file system to S3), or change the way key into your data, 
-or the way that data is serialized? If you use py2store tools to separate the different storage concerns, 
+or the way that data is serialized? If you use oldpy2store tools to separate the different storage concerns, 
 it'll be quite easy to change, since change will be localized. And if you're dealing with code that was already 
-written, with concerns all mixed up, py2store should still be able to help since you'll be able to
+written, with concerns all mixed up, oldpy2store should still be able to help since you'll be able to
 more easily give the new system a facade that makes it look like the old one. 
 
 All of this can also be applied to data bases as well, in-so-far as the CRUD operations you're using 
@@ -136,7 +136,7 @@ Now it's not a long term solution: If we're really going to be using the new sys
 should learn it. But when you just got to get stuff done, having a familiar facade to something new 
 is a life saver. 
 
-py2store would like to make it easier for you roll out an adapter to be able to talk 
+oldpy2store would like to make it easier for you roll out an adapter to be able to talk 
 to the new system in the way **you** are familiar with.
  
 ## Thinking about storage later, if ever
@@ -149,7 +149,7 @@ Often though, the time is later, if ever. Few proof of concepts and MVPs ever ma
 So instead, I'd like to just get on with the business logic and write my program. 
 So what I need is an easy way to get some minimal storage functionality. 
 But when the time comes to optimize, I shouldn't have to change my code, but instead just change the way my 
-DAO does things. What I need is py2store.
+DAO does things. What I need is oldpy2store.
 
 
 # Remove data access entropy
@@ -160,7 +160,7 @@ Data is needed in many different contexts, which comes with its own natural data
 
 In between both: A entropic mess of ad-hoc connections and annoying time-consuming and error prone boilerplate. 
 
-`py2store` (and it's now many extensions) is there to mitigate this. 
+`oldpy2store` (and it's now many extensions) is there to mitigate this. 
 
 The design gods say SOC, DRY, SOLID* and such. That's good design, yes. But it can take more work to achieve these principles. 
 We'd like to make it _easier_ to do it right than do it wrong.
@@ -177,9 +177,9 @@ We need to determine what are the most common operations we want to do on data, 
 
 Looking at this, we see that the base operations for complex data systems such as data bases and file systems overlap significantly with the base operations on python (or any programming language) objects. 
 
-So we'll reflect this in our choice of a common "language" for these operations. For examples, once projected to a `py2store` object, iterating over the contents of a data base, or over files, or over the elements of a python (iterable) object should look the same, in code. Achieving this, we achieve SOC, but also set ourselves up for tooling that can assume this consistency, therefore be DRY, and many of the SOLID principles of design.
+So we'll reflect this in our choice of a common "language" for these operations. For examples, once projected to a `oldpy2store` object, iterating over the contents of a data base, or over files, or over the elements of a python (iterable) object should look the same, in code. Achieving this, we achieve SOC, but also set ourselves up for tooling that can assume this consistency, therefore be DRY, and many of the SOLID principles of design.
 
-Also mentionable: So far, `py2store` core tools are all pure python -- no dependencies on anything else. 
+Also mentionable: So far, `oldpy2store` core tools are all pure python -- no dependencies on anything else. 
 
 Now, when you want to specialize a store (say talk to data bases, web services, acquire special formats (audio, etc.)), then you'll need to pull in a few helpful packages. But the core tooling is pure.
 
@@ -192,21 +192,21 @@ Let's get an object that gives you access to local files as if they were a dicti
 
 ```python
 import os
-import py2store
-rootdir = os.path.dirname(py2store.__file__)
+import oldpy2store
+rootdir = os.path.dirname(oldpy2store.__file__)
 rootdir
 ```
 
 
 
 
-    '/Users/Thor.Whalen/Dropbox/dev/p3/proj/i/py2store/py2store'
+    '/Users/Thor.Whalen/Dropbox/dev/p3/proj/i/oldpy2store/oldpy2store'
 
 
 
 
 ```python
-from py2store import LocalBinaryStore
+from oldpy2store import LocalBinaryStore
 
 s = LocalBinaryStore(rootdir)
 len(s)
@@ -283,9 +283,9 @@ and delete a key by doing
 del s[key]
 ```
 
-(We're not demoing this here because we don't want you to write stuff in py2store files, which we're using as a demo folder.)
+(We're not demoing this here because we don't want you to write stuff in oldpy2store files, which we're using as a demo folder.)
 
-Also, note that by default `py2store` "persisters" (as these mutable mappings are called) have their `clear()` method removed to avoid mistakingly deleting a whole data base or file system. 
+Also, note that by default `oldpy2store` "persisters" (as these mutable mappings are called) have their `clear()` method removed to avoid mistakingly deleting a whole data base or file system. 
 
 ### key filtering
 
@@ -293,7 +293,7 @@ Say you only want `.py` files...
 
 
 ```python
-from py2store import filt_iter
+from oldpy2store import filt_iter
 
 s = filt_iter(s, filt=lambda k: k.endswith('.py'))
 len(s)
@@ -325,7 +325,7 @@ So let's tell our reader/store that's what we want...
 
 
 ```python
-from py2store import wrap_kvs
+from oldpy2store import wrap_kvs
 
 s = wrap_kvs(s, obj_of_data=lambda v: v.decode())
 
@@ -345,11 +345,11 @@ print(v[:300])
     from os import stat as os_stat
     from functools import wraps
     
-    from py2store.base import Collection, KvReader, KvPersister
-    from py2store.key_mappers.naming import (
+    from oldpy2store.base import Collection, KvReader, KvPersister
+    from oldpy2store.key_mappers.naming import (
         mk_pattern_from_template_and_format_dict,
     )
-    from py2store.key_mappers.paths import mk_relative_path_store
+    from oldpy2store.key_mappers.paths import mk_relative_path_store
     
     file_sep = os.pat
 
@@ -401,11 +401,11 @@ print(s['filesys'][:300])
     from os import stat as os_stat
     from functools import wraps
     
-    from py2store.base import Collection, KvReader, KvPersister
-    from py2store.key_mappers.naming import (
+    from oldpy2store.base import Collection, KvReader, KvPersister
+    from oldpy2store.key_mappers.naming import (
         mk_pattern_from_template_and_format_dict,
     )
-    from py2store.key_mappers.paths import mk_relative_path_store
+    from oldpy2store.key_mappers.paths import mk_relative_path_store
     
     file_sep = os.pat
 
@@ -421,7 +421,7 @@ If you're not deleting or creating files in the root folder often (or don't care
 The simplest would be to do this:
     
 ```python
-from py2store import cached_keys
+from oldpy2store import cached_keys
 s = cached_keys(s)
 ```
 
@@ -435,7 +435,7 @@ Well then...
 
 
 ```python
-from py2store import cached_keys
+from oldpy2store import cached_keys
 
 s = cached_keys(s, keys_cache=sorted)
 list(s)[:10]
@@ -461,14 +461,14 @@ Note that there's a lot more too caching. We'll just mention two useful things t
 
 - You can use `keys_cache` to specify a "precomputed/explicit" collection of keys to use in the store. This allows you to have full flexibility on defining sub-sets of stores.
 
-- Here we talked about caching keys, but caching values is arguably more important. If it takes a long time to fetch remote data, you want to cache it locally. Further, if loading data from local storage to RAM is creating lag, you can cache in RAM. And you can do all this easily (and separate from the concern of both source and cache stores) using tools you an find in `py2store.caching`. 
+- Here we talked about caching keys, but caching values is arguably more important. If it takes a long time to fetch remote data, you want to cache it locally. Further, if loading data from local storage to RAM is creating lag, you can cache in RAM. And you can do all this easily (and separate from the concern of both source and cache stores) using tools you an find in `oldpy2store.caching`. 
 
 ### Aggregating these transformations to be able to apply them to other situations (DRY!)
 
 
 ```python
 from lined import Line  # Line just makes a function by composing/chaining several functions
-from py2store import LocalBinaryStore, filt_iter, wrap_kvs, cached_keys
+from oldpy2store import LocalBinaryStore, filt_iter, wrap_kvs, cached_keys
 
 key_filter_wrapper = filt_iter(filt=lambda k: k.endswith('.py'))
 
@@ -530,7 +530,7 @@ print(s['caching'][:300])
     from functools import wraps, partial
     from typing import Iterable, Union, Callable, Hashable, Any
     
-    from py2store.trans import store_decorator
+    from oldpy2store.trans import store_decorator
     
     
     ###############################################################################################################
@@ -549,17 +549,17 @@ Here are a few you can check out:
 The classics (data bases and storage systems):
 
 ```python
-from py2store import (
+from oldpy2store import (
     S3BinaryStore,  # to talk to AWS S3  (uses boto)
     SQLAlchemyStore,  # to talk to sql (uses alchemy)
 )
-# from py2store.stores.mongo_store import MongoStore  # moved to mongodol
+# from oldpy2store.stores.mongo_store import MongoStore  # moved to mongodol
 ```
 
 To access configs and customized store specifications:
 
 ```python
-from py2store import (
+from oldpy2store import (
     myconfigs,
     mystores
 )
@@ -568,7 +568,7 @@ from py2store import (
 To access contents of zip files:    
     
 ```python
-from py2store import (
+from oldpy2store import (
     FilesOfZip, 
     FlatZipFilesReader,   
 )
@@ -577,7 +577,7 @@ from py2store import (
 To customize the format you want your data in (depending on the context... like a file extension):
 
 ```python
-from py2store.misc import (
+from oldpy2store.misc import (
     get_obj,
     MiscReaderMixin,
     MiscStoreMixin,
@@ -589,10 +589,10 @@ from py2store.misc import (
 To define string, tuple, or dict formats for keys, and move between them:
 
 ```python
-from py2store.key_mappers.naming import StrTupleDict
+from oldpy2store.key_mappers.naming import StrTupleDict
 ```
 
-But probably the best way to learn the way of `py2store` is to see how easily powerful functionalities can be made with it.
+But probably the best way to learn the way of `oldpy2store` is to see how easily powerful functionalities can be made with it.
 
 We'll demo a few of these now.
 
@@ -620,7 +620,7 @@ Suppose you want to write some code that uses some data. You need that data to r
 - write some instructions on where and how to get the data, where to put it in the file system, and/or what config file or environment variable to tinker with to tell it where that data is, or...
 - use graze
 
-Since it's implemented as a mapping, you can easily transform it to do all kinds of things (namely, using [py2store tools](https://github.com/i2mint/py2store)). Things like
+Since it's implemented as a mapping, you can easily transform it to do all kinds of things (namely, using [oldpy2store tools](https://github.com/i2mint/oldpy2store)). Things like
 - getting your content in a more ready-to-use object than bytes, or
 - putting an expiry date on some cached items, so that it will automatically re-fresh the data
 
@@ -631,7 +631,7 @@ of Graze was effectively 57 lines (47 without imports). [Check it out](https://g
 - connect both through caching logic
 - do some key mapping to get from url to local path and visa-versa
 
-And all those things are made easy with [py2store](https://github.com/i2mint/py2store).
+And all those things are made easy with [oldpy2store](https://github.com/i2mint/oldpy2store).
 
 
 ```python
@@ -668,7 +668,7 @@ sorted(g)[:3]  # first (in sorted order) 3 keys
 ```python
 from io import BytesIO
 import pandas as pd
-from py2store import FilesOfZip
+from oldpy2store import FilesOfZip
 
 # getting the raw data
 url = 'http://www.ssa.gov/oact/babynames/state/namesbystate.zip'  # this specifies both where to get the data from, and where to put it locally!
@@ -869,9 +869,9 @@ d['cow']
 
 
 
-### A little py2store exercise: A store to get image objects of emojis
+### A little oldpy2store exercise: A store to get image objects of emojis
 
-As a demo of py2store, let's make a store that allows you to get (displayable) image objects of emojis, taking care of downloading and caching 
+As a demo of oldpy2store, let's make a store that allows you to get (displayable) image objects of emojis, taking care of downloading and caching 
 the name:url information for you.
 
 
@@ -879,7 +879,7 @@ the name:url information for you.
 from functools import cached_property
 import json
 
-from py2store import KvReader
+from oldpy2store import KvReader
 from graze import graze
 
 class EmojiUrls(KvReader):
@@ -915,7 +915,7 @@ len(emojis), emojis['cow']
 ```python
 from IPython.display import Image
 import requests
-from py2store import wrap_kvs, add_ipython_key_completions
+from oldpy2store import wrap_kvs, add_ipython_key_completions
 
 @add_ipython_key_completions  # this enables tab-completion of keys in jupyter notebooks
 @wrap_kvs(obj_of_data=lambda url: Image(requests.get(url).content))
@@ -952,8 +952,8 @@ Quick and easy search engine of anything (that can be expressed as a key-value s
 ```python
 # Make a store to search in (only requirements is that it provide text values)
 import os
-import py2store
-rootdir = os.path.dirname(py2store.__file__)
+import oldpy2store
+rootdir = os.path.dirname(oldpy2store.__file__)
 store_to_search = LocalBinaryStore(os.path.join(rootdir) + '{}.py')  # The '{}.py' is a short-hand of LocalBinaryStore to filter for .py files only
 
 # make a search object for that store
@@ -966,13 +966,13 @@ search = SearchStore(store_to_search)
 search('cache key-value pairs')
 ```
 
-    array(['py2store/caching.py', 'py2store/utils/cumul_aggreg_write.py',
-           'py2store/trans.py', 'py2store/examples/write_caches.py',
-           'py2store/utils/cache_descriptors.py',
-           'py2store/utils/explicit.py',
-           'py2store/persisters/arangodb_w_pyarango.py',
-           'py2store/persisters/dynamodb_w_boto3.py',
-           'py2store/stores/delegation_stores.py', 'py2store/util.py'],
+    array(['oldpy2store/caching.py', 'oldpy2store/utils/cumul_aggreg_write.py',
+           'oldpy2store/trans.py', 'oldpy2store/examples/write_caches.py',
+           'oldpy2store/utils/cache_descriptors.py',
+           'oldpy2store/utils/explicit.py',
+           'oldpy2store/persisters/arangodb_w_pyarango.py',
+           'oldpy2store/persisters/dynamodb_w_boto3.py',
+           'oldpy2store/stores/delegation_stores.py', 'oldpy2store/util.py'],
           dtype=object)
 ### search jokes (and download them automatically
 
@@ -1012,7 +1012,7 @@ A dict is neither really a backend, nor a persister. But it helps to try things 
 footprint.
 
 ```python
-from py2store.base import Store
+from oldpy2store.base import Store
 
 s = Store()
 assert list(s) == []
@@ -1030,7 +1030,7 @@ assert list(s) == ['foo', 'another']  # here they are
 
 There's nothing fantastic in the above code. 
 I've just demoed some operations on a dict.
-But it's exactly this simplicity that py2store aims for. 
+But it's exactly this simplicity that oldpy2store aims for. 
 You can now replace the `s = Store()` with `s = AnotherStore(...)` where `AnotherStore` 
 now uses some other backend that could be remote or local, could be a database, or any 
 system that can store `something` (the value) `somewhere` (the key).
@@ -1042,7 +1042,7 @@ And yet, it will still look like you're talking to a dict. This not only means t
 talk to various storage systems without having to actually learn how to, but also means 
 that the same business logic code you've written can be reused with no modification. 
 
-But py2store offers more than just a simple consistent facade to **where** you store things, 
+But oldpy2store offers more than just a simple consistent facade to **where** you store things, 
 but also provides means to define **how** you do it.
 
 In the case of key-value storage, the "how" is defined on the basis of the keys (how you reference) 
@@ -1054,7 +1054,7 @@ Take a look at the following example, that adds a layer of key conversion to a s
 
 ```python
 # defining the store
-from py2store.base import Store
+from oldpy2store.base import Store
 
 class PrefixedKeyStore(Store):
     prefix = ''
@@ -1109,7 +1109,7 @@ Say we want to deserialize any text we stored by appending `"hello "` to everyth
 
 ```python
 # defining the store
-from py2store.base import Store
+from oldpy2store.base import Store
 
 class MyFunnyStore(Store):
     def _obj_of_data(self, data):
@@ -1135,7 +1135,7 @@ when we retrieve the text.
 
 ```python
 # defining the store
-from py2store.base import Store
+from oldpy2store.base import Store
 
 class MyOtherFunnyStore(Store):
     def _data_of_obj(self, obj):
@@ -1166,7 +1166,7 @@ Say you wanted the store to pickle as your serializer. Here's how this could loo
 ```python
 # defining the store
 import pickle
-from py2store.base import Store
+from oldpy2store.base import Store
 
 
 class PickleStore(Store):
@@ -1198,7 +1198,7 @@ The code still looks like you're working with a dict.
 ## But how do you change the persister?
 
 By using a persister that persists where you want. 
-You can also write your own. All a persister needs to work with py2store is that it follows the interface 
+You can also write your own. All a persister needs to work with oldpy2store is that it follows the interface 
 python's `collections.MutableMapping` (or a subset thereof). More on how to make your own persister later
 You just need to follow the collections.MutableMapping interface. 
 
@@ -1320,7 +1320,7 @@ assert 'foo2' in list(s)
 
 # How it works
 
-py2store offers three aspects that you can define or modify to store things where you like and how you like it:
+oldpy2store offers three aspects that you can define or modify to store things where you like and how you like it:
 * **Persistence**: Where things are actually stored (memory, files, DBs, etc.)
 * **Serialization**: Value transformaton. 
 How python objects should be transformed before it is persisted, 
@@ -1332,7 +1332,7 @@ All of this allows you to do operations such as "store this (value) in there (pe
 moving the tedious particularities of the "in there" as well how the "this" and "that" are transformed to fit 
 in there, all out of the way of the business logic code. The way it should be.
 
-![alt text](img/py2store_how_it_works.png)
+![alt text](img/oldpy2store_how_it_works.png)
 
 Note: Where data is actually persisted just depends on what the base CRUD methods 
 (`__getitem__`, `__setitem__`, `__delitem__`, `__iter__`, etc.) define them to be. 
@@ -1378,7 +1378,7 @@ def basic_test(store, k='foo', v='bar'):
 
 There are many choices of local file stores according to what you're trying to do. 
 One general (but not too general) purpose local file store is 
-'py2store.stores.local_store.RelativePathFormatStoreEnforcingFormat'.
+'oldpy2store.stores.local_store.RelativePathFormatStoreEnforcingFormat'.
 It can do a lot for you, like add a prefix to your keys (so you can talk in relative instead of absolute paths),
 lists all files in subdirectories as well recursively, 
 only show you files that have a given pattern when you list them, 
@@ -1386,7 +1386,7 @@ and not allow you to write to a key that doesn't fit the pattern.
 Further, it also has what it takes to create parametrized paths or parse out the parameters of a path. 
 
 ```python
-from py2store.stores.local_store import RelativePathFormatStoreEnforcingFormat as LocalFileStore
+from oldpy2store.stores.local_store import RelativePathFormatStoreEnforcingFormat as LocalFileStore
 import os
 
 rootdir = os.path.expanduser('~/pystore_tests/')  # or replace by the folder you want to use
@@ -1434,13 +1434,13 @@ specify what fields should be considered as keys, and what fields should be cons
 By default, the `_id` field (the only field ensured by default to contain unique values) is the single key field, and 
 all other fields are considered to be data fields.
 
-Note: py2store mongo tools have now been moved to the mongodol project. Import from there.
+Note: oldpy2store mongo tools have now been moved to the mongodol project. Import from there.
 Requires `pymongo`.
 
 ```python
 from mongodol.stores import MongoStore  # Note: project moved to mongodol now
 # The following makes a default MongoStore, the default pymongo.MongoClient settings, 
-# and db_name='py2store', collection_name='test', key_fields=('_id',)
+# and db_name='oldpy2store', collection_name='test', key_fields=('_id',)
 store = MongoStore()
 basic_test(store, k={'_id': 'foo'}, v={'val': 'bar', 'other_val': 3})
 ```
@@ -1458,7 +1458,7 @@ basic_test(store, k=(1234, 'bob'), v={'age': 42, 'gender': 'unspecified'})
 ## S3, SQL, Zips, Dropbox
 
 S3 persister/stores work pretty much like LocalStores, but stores in S3. You'll need to have an account with 
-AWS to use this. Find S3 stores in py2store.stores.s3_stores.
+AWS to use this. Find S3 stores in oldpy2store.stores.s3_stores.
 
 SQL give you read and write access to SQL DBs and tables. 
 
@@ -1471,7 +1471,7 @@ Dropbox will give you access to dropbox files through the same dict-like interfa
 
 ## Caching
 
-There's some basic caching capabilities in py2store. 
+There's some basic caching capabilities in oldpy2store. 
 Basic, but covers a lot of use cases. 
 But if you want to bring your own caching tools, you might be able to use them here too. 
 
@@ -1482,7 +1482,7 @@ Say you want to use local files as your cache. Try something like this:
 
 ```python
 from cachetools import cached # there's also LRUCache, TTLCache...
-from py2store import QuickPickleStore, wrap_kvs
+from oldpy2store import QuickPickleStore, wrap_kvs
 
 def tuple_to_str(k: tuple, sep: str=os.path.sep) -> str:
     return sep.join(k)
@@ -1522,11 +1522,11 @@ def hello(x='world'):
 
 Call it what you want, really.
 
-It would be tempting to coin py2store as ya(p)orm (yet another (python) object-relational mapping), 
-but that would be misleading. The intent of py2store is not to map objects to db entries, 
+It would be tempting to coin oldpy2store as ya(p)orm (yet another (python) object-relational mapping), 
+but that would be misleading. The intent of oldpy2store is not to map objects to db entries, 
 but rather to offer a consistent interface for basic storage operations. 
 
-In that sense, py2store is more akin to an implementation of the data access object (DAO) pattern. 
+In that sense, oldpy2store is more akin to an implementation of the data access object (DAO) pattern. 
 Of course, the difference between ORM and DAO can be blurry, so all this should be taken with a grain of salt.
 
 Advantages and disadvantages such abstractions are easy to search and find, but in most cases the 
@@ -1543,7 +1543,7 @@ the running-costs of some operations.
 
 When does "storing data" **not** transform data? The answer is that storage almost always transforms data in some way.
 But some of these transformations are taken for granted, because there's so often "attached" 
-(i.e. "co-occur") with the raw process of storing. In py2store, the data transformation is attached to (but not entangled with) the store object. 
+(i.e. "co-occur") with the raw process of storing. In oldpy2store, the data transformation is attached to (but not entangled with) the store object. 
 This means you have a specific place where you can check or change that aspect of storage.
 
 Having a consistent and simple interface to storage is useful. Being able to attach key and value 
@@ -1556,7 +1556,7 @@ Have a look at this surreal behavior:
 
 ```python
 # defining the store
-from py2store.base import Store
+from oldpy2store.base import Store
 
 class MyFunnyStore(Store):
     def _obj_of_data(self, data):
@@ -1629,7 +1629,7 @@ We're not used to `s[some_file]` meaning
 
 Stores allow you to compose extraction and transformation, or transformation and loading, 
 and further specifying filter, caching, indexing, and many other aspects related to storage. 
-Those, py2store helps you create the perspective you want, or need. 
+Those, oldpy2store helps you create the perspective you want, or need. 
 
 That said, one needs to be careful that the simplicity thus created doesn't induce misuse. 
 For example, in the `MyFunnyStore` example above, we may want to use a different store to persist 
@@ -1637,7 +1637,7 @@ and to read, and perhaps reflect their function in their names. For example:
 
 ```python
 # defining the store
-from py2store.base import Store
+from oldpy2store.base import Store
 
 
 class ExtractAndTransform(Store):
